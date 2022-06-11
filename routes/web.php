@@ -13,20 +13,20 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', function () {
+    return view('welcome');
+});
 
-// Route::get('/', function () {
-//     return view('pages.admin.dashboard');
-// });
+// // Route::prefix('admin')->group(function(){
+// //     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('admin.dashboard');
+// //     });
 
-Route::prefix('admin')->group(function(){
+Route::middleware(['auth'])->prefix('admin')->group(function(){
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/logout', [HomeController::class, 'logout'])->name('admin.logout');
     });
-
-
-
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
-
 require __DIR__.'/auth.php';
